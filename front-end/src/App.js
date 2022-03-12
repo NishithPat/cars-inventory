@@ -10,19 +10,19 @@ function App() {
   const [soldStatus, setSoldStatus] = useState(false);
 
   const carData = async () => {
-    let response = await fetch(`http://localhost:9890/cars`)
+    let response = await fetch(`https://cars-ni8mare.herokuapp.com/cars`)
     let data = await response.json();
     setCars(data);
   }
 
   const soldCarData = async () => {
-    let response = await fetch(`http://localhost:9890/cars/soldCars`)
+    let response = await fetch(`https://cars-ni8mare.herokuapp.com/cars/soldCars`)
     let data = await response.json();
     setCars(data);
   }
 
   const unsoldCarData = async () => {
-    let response = await fetch(`http://localhost:9890/cars/unsoldCars`)
+    let response = await fetch(`https://cars-ni8mare.herokuapp.com/cars/unsoldCars`)
     let data = await response.json();
     setCars(data);
   }
@@ -39,7 +39,7 @@ function App() {
 
     console.log(car);
 
-    let response = await fetch('http://localhost:9890/cars', {
+    let response = await fetch('https://cars-ni8mare.herokuapp.com/cars', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -65,7 +65,7 @@ function App() {
       sold: true
     }
 
-    let response = await fetch(`http://localhost:9890/cars/car/${id}`, {
+    let response = await fetch(`https://cars-ni8mare.herokuapp.com/cars/car/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json'
