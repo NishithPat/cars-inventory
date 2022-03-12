@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
 
@@ -8,6 +8,11 @@ function App() {
   const [carModel, setCarModel] = useState("");
   const [carPrice, setCarPrice] = useState("");
   const [soldStatus, setSoldStatus] = useState(false);
+  const [totalSales, setTotalSales] = useState("");
+
+  useEffect(() => {
+    totalSalesData();
+  }, [])
 
   const carData = async () => {
     let response = await fetch(`https://cars-ni8mare.herokuapp.com/cars`)
@@ -25,6 +30,12 @@ function App() {
     let response = await fetch(`https://cars-ni8mare.herokuapp.com/cars/unsoldCars`)
     let data = await response.json();
     setCars(data);
+  }
+
+  const totalSalesData = async () => {
+    let response = await fetch(`https://cars-ni8mare.herokuapp.com/cars/sales`)
+    let data = await response.json();
+    setTotalSales(data.totalSalesAmount);
   }
 
   const handleSubmit = async (event) => {
@@ -56,7 +67,7 @@ function App() {
     setSoldStatus(false);
 
     carData();
-
+    totalSalesData();
   }
 
   const changeStatus = async (id) => {
@@ -77,6 +88,7 @@ function App() {
     console.log(data.sold);
 
     carData();
+    totalSalesData();
   }
 
   return (
@@ -123,6 +135,7 @@ function App() {
           </div>
         </form>
       </div>
+      <h5 className="mb-3">Total Sales: {totalSales}</h5>
       <div className="btn-group mb-3" >
         <button type="button" className="btn btn-outline-primary" onClick={carData}>Cars Data</button>
         <button type="button" className="btn btn-outline-primary" onClick={soldCarData}>Sold Cars Data</button>
